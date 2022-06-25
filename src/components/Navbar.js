@@ -4,7 +4,9 @@ import Home from './Home';
 import Products from './Products';
 import ContactUs from './ContactUs';
 import SignUp from './SignUp';
-import Navbar from 'react-bootstrap/Navbar';
+import Productinfo from './Productinfo';
+import Cart from './Cart';
+//import Navbar from 'react-bootstrap/Navbar';
 
 function Navbar() {
     return (
@@ -19,12 +21,12 @@ function Navbar() {
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+                            <ul className="navbar-nav mx-auto mb-2 mb-lg-0 me-5">
                                 <li className="nav-item">
-                                    <NavLink className="nav-link active" aria-current="page" to="">Home</NavLink>
+                                    <NavLink className="nav-link active" aria-current="page" to="productinfo">User</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link active" aria-current="page" to="products">Products</NavLink>
+                                    <NavLink className="nav-link active" aria-current="page" to="products">Buyer</NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink className="nav-link active" aria-current="page" to="contact us">Contact us</NavLink>
@@ -49,13 +51,15 @@ function Navbar() {
             {/* define the routes for its children */}
             <Routes>
                 {/* route for home component */}
-                <Route path="/" element={<Home />} />
+                <Route path="/productinfo" element={<Productinfo/>} />
                 {/* users component */}
-                <Route path="/products" element={<Products />} />
+                <Route path="/products" element={<Products/>} />
                 {/* contactus component */}
                 <Route path="/contactus" element={<ContactUs />} />
                 {/* Signup component */}
                 <Route path="/signup" element={<SignUp />} />
+                {/* cart component */}
+                <Route path="/cart" element={<Cart />} />
             </Routes>
         </div>
     )

@@ -52,7 +52,7 @@ app.use('/product-api',productApp);
 app.use('*',(request,response)=>{
     response.sendFile(path.join(__dirname,'./build/index.html'))
 })
-
+  
 //handling invalid paths
 app.use((request, response, next) => {
   response.send({ message: `path ${request.url} is invalid` });
