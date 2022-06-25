@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Productinfo,Searchinfo} from './Productinfo';
 
 const Card = (props) => {
     return(
@@ -7,8 +8,9 @@ const Card = (props) => {
                <img src={props.img} className="card-img-top img-fluid"/>
                <div className='card-body'>
                     <h5 className='card-title'>{props.title}</h5>
-                    <p className='card-text'>{props.desc}</p>
+                    <p className='card-text'>{props.prics}</p>
                     <button className="btn btn-success">Add to Cart</button>
+                    <Link>More</Link>
                </div>
             </div>
 

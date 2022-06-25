@@ -12,7 +12,7 @@ const Products = () => {
                    {
                        data.productdata.map((item,index)=>{
                            return(
-                               <Card img={item.img} title={item.title} desc={item.desc} price={item.price} key={index}/>
+                               <Card img={item.img} title={item.title} desc={item.desc} price={item.prics} key={index} id={item.id}/>
                            )
                        })
                    }
