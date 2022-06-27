@@ -4,6 +4,9 @@ import Home from './Home';
 import Products from './Products';
 import ContactUs from './ContactUs';
 import SignUp from './SignUp';
+import Login from './Login';
+import { FiUserPlus } from "react-icons/fi";
+import { BsFillCartPlusFill,BsBoxArrowInRight } from "react-icons/bs";
 
 function Navbar() {
     return (
@@ -18,7 +21,7 @@ function Navbar() {
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+                            <ul className="navbar-nav mx-auto mb-2 me-3">
                                 <li className="nav-item">
                                     <NavLink className="nav-link active" aria-current="page" to="">Home</NavLink>
                                 </li>
@@ -30,15 +33,15 @@ function Navbar() {
                                 </li>
                             </ul>
                             <div className="buttons">
-                                {/* Login button */}
-                                <NavLink to="/signup" className="btn btn-outline-dark ">
-                                    <i className="me-1"></i>Register</NavLink>
                                 {/* Register button */}
+                                <NavLink to="/signup" className="btn btn-outline-dark ms-2  navlink active">
+                                    <i className="me-1"></i><FiUserPlus/>  Register</NavLink>
+                                {/* Loin button */}
                                 <NavLink to="/login" className="btn btn-outline-dark ms-2 navlink active">
-                                    <i className="me-1"></i>Login</NavLink>
+                                    <i className="me-1"></i><BsBoxArrowInRight/>  Login</NavLink>
                                 {/* Cart button */}
                                 <NavLink to="/cart " className="btn btn-outline-dark ms-2 navlink active">
-                                    <i className="me-1"></i>Cart</NavLink>
+                                    <i className="me-1"></i><BsFillCartPlusFill/>  Cart</NavLink>
                             </div>
                         </div>
                     </div>
@@ -55,6 +58,8 @@ function Navbar() {
                 <Route path="/contactus" element={<ContactUs />} />
                 {/* Signup component */}
                 <Route path="/signup" element={<SignUp />} />
+                {/* Login component */}
+                <Route path="/login" element={<Login />} />
             </Routes>
         </div>
     )
