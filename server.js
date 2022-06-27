@@ -2,7 +2,7 @@
 const { request } = require('express')  
 const exp = require('express');//importing a function express
 const app = exp();//object created for exp as app
-const mclient=require("mongodb").MongoClient;
+mclient=require("mongodb").MongoClient;
 
 //import dotenv
 require('dotenv').config()
@@ -52,7 +52,7 @@ app.use('/product-api',productApp);
 app.use('*',(request,response)=>{
     response.sendFile(path.join(__dirname,'./build/index.html'))
 })
-  
+
 //handling invalid paths
 app.use((request, response, next) => {
   response.send({ message: `path ${request.url} is invalid` });

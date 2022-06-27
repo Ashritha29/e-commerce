@@ -7,12 +7,10 @@ const userApp=exp.Router()
 const bcryptjs=require("bcryptjs");
 //import jsonwebtoken to create token
 const jwt=require("jsonwebtoken");
-//import env
-require("dotenv").config()
 // to extract body of request object of all request
 userApp.use(exp.json())
 
-
+require('dotenv').config()
 //create REST API
 
 //create route to handle '/getusers' path
@@ -20,7 +18,7 @@ userApp.use(exp.json())
 userApp.get('/getusers',expressAsyncHandler(async(request,response)=>{
     //get userCollectionObject
    let userCollectionObject=request.app.get("userCollectionObject");
-    //get all users
+    //get all users toArray as it produces cursor
     let users=await userCollectionObject.find().toArray()
     //send res
     response.send({message:'all users',payload: users});
@@ -49,7 +47,7 @@ userApp.get("/login",expressAsyncHandler(async(request,response)=>{
    }
    //if passwords are matched
    else{
-     //create token in seconds
+     //create token in seconds for hours "2h"
      let token=jwt.sign({username:userOfDb.username},process.env.SECRET_KEY,{expiresIn:60});
     //find token
     //payload is the token in encrypted form 
@@ -117,8 +115,6 @@ userApp.delete('/remove-user/:uname',expressAsyncHandler(async(request,response)
     }
 
 }))
-
-
 
 //export userApp
 module.exports=userApp;

@@ -1,22 +1,32 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import {Form,Button} from "react-bootstrap";
-import {MdLogin} from "react-icons/md";
+import { Form, Button } from "react-bootstrap";
+import { MdLogin } from "react-icons/md";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 function SignUp() {
-    const{register,handleSubmit,formState:{errors},}=useForm();
-    const onFormSubmit=(userObj)=>{
-        console.log(userObj);
+    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const onFormSubmit = (userObj) => {
+        axios.post("http://localhost:5000/user-api/create-user", userObj)
+            .then(response => {
+                console.log(response);
+                alert(response.data.message);
+            })
+            .catch(error => {
+                console.log(error)
+                alert("something is wrong in creating the user")
+            });
     }
     return (
-        <>
-        <div className='display-2 text-center text-info'>SignUp</div>
+        <div className='container bg-indigo w-80 h-80'>
+            <div className='display-2 text-center text-info '>SignUp</div>
             <Form className="w-50 mx-auto" onSubmit={handleSubmit(onFormSubmit)} >
                 {/* username */}
                 <Form.Group className="mb-3" >
                     <Form.Label >Username</Form.Label>
-                    <Form.Control type="text"  placeholder="Enter username"{...register("username",{minLength:4,maxLength:10,required:true})}/>
+                    <Form.Control type="text" placeholder="Enter username"{...register("username", { minLength: 4, maxLength: 10, required: true })} />
                     {/* validation error message for username */}
                     {errors.username?.type === 'required' && <p classname="text-danger">* Username is required</p>}
                     {errors.username?.type === 'minLength' && <p className="text-danger">* Min length should be 4</p>}
@@ -25,7 +35,7 @@ function SignUp() {
                 {/* password */}
                 <Form.Group className="mb-3">
                     <Form.Label >Password</Form.Label>
-                    <Form.Control type="password"  placeholder="Enter password"{...register("password",{required:true,minLength:4,maxLength:10})}/>
+                    <Form.Control type="password" placeholder="Enter password"{...register("password", { required: true, minLength: 4, maxLength: 10 })} />
                     {/* validation error message for password */}
                     {errors.password?.type === 'required' && <p classname="text-danger">*Password is required</p>}
                     {errors.password?.type === 'minLength' && <p className="text-danger">* Min length should be 4</p>}
@@ -34,23 +44,25 @@ function SignUp() {
                 {/* E-mail */}
                 <Form.Group className="mb-3">
                     <Form.Label >Email</Form.Label>
-                    <Form.Control type="mail"  placeholder="Enter mail"{...register("mail",{required:true})}/>
+                    <Form.Control type="mail" placeholder="Enter mail"{...register("mail", { required: true })} />
                     {/* validation error message for E-mail */}
                     {errors.email && <p classname="text-danger">*E-mail is required</p>}
                 </Form.Group>
                 {/* City */}
                 <Form.Group className="mb-3">
                     <Form.Label >City</Form.Label>
-                    <Form.Control type="city"  placeholder="Enter City"{...register("city",{required:true})}/>
+                    <Form.Control type="city" placeholder="Enter City"{...register("city", { required: true })} />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                    Signup<MdLogin/>
+                    Signup<MdLogin />
                 </Button>
             </Form>
-        </>
+        </div>
     );
 }
 
 export default SignUp;
+
+
 
 

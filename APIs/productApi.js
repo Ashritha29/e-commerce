@@ -5,7 +5,7 @@ const exp=require('express');
 const productApp=exp.Router()
 
 const expressAsyncHandler=require('express-Async-Handler')
-// to extract body of request object
+// to extract body of request object body parsing middle ware
 productApp.use(exp.json())
 
 //get product
@@ -40,36 +40,36 @@ productApp.get('/getproduct/:id',expressAsyncHandler(async(request,response)=>{
 
 }))
 
-//create product
-productApp.post('/create-product',(request,response)=>{
-     //get productionCollectionObject
-     //app is not available but in request it is available
-     let productCollectionObject=request.app.get("productCollectionObject");
-     //get product obj from req
-     let productObj=request.body;
-     //import productObj
-     productCollectionObject.insertOne(productObj,(err,result)=>{
-         if(err)
-         { console.log("err is creating product",err)
-         }
-          else{
-          response.send({message:'product created sucessfully'})
-          }
-     });
-})
-//creating product using promise
-//create product
-productApp.post('/create-product',(request,response)=>{
-    //get productionCollectionObject
-    //app is not available but in request it is available
-    let productCollectionObject=request.app.get("productCollectionObject");
-    //get product obj from req
-    let productObj=request.body;
-    //import productObj
-    productCollectionObject.insertOne(productObj)
-    .then(result=>response.send({message:"product created successfull"}))
-    .catch(err=>console.log("err in creating product",err))
-})
+// //create product
+// productApp.post('/create-product',(request,response)=>{
+//      //get productionCollectionObject
+//      //app is not available but in request it is available
+//      let productCollectionObject=request.app.get("productCollectionObject");
+//      //get product obj from req
+//      let productObj=request.body;
+//      //import productObj
+//      productCollectionObject.insertOne(productObj,(err,result)=>{
+//          if(err)
+//          { console.log("err is creating product",err)
+//          }
+//           else{
+//           response.send({message:'product created sucessfully'})
+//           }
+//      });
+// })
+// //creating product using promise
+// //create product
+// productApp.post('/create-product',(request,response)=>{
+//     //get productionCollectionObject
+//     //app is not available but in request it is available
+//     let productCollectionObject=request.app.get("productCollectionObject");
+//     //get product obj from req
+//     let productObj=request.body;
+//     //import productObj
+//     productCollectionObject.insertOne(productObj)
+//     .then(result=>response.send({message:"product created successfull"}))
+//     .catch(err=>console.log("err in creating product",err))
+// })
 
 //async and wait
 //create product
@@ -82,7 +82,7 @@ productApp.post('/create-product',expressAsyncHandler(async(request,response)=>{
     let productObj=request.body;
     //import productObj
     //until insertOne is completed we cannot do other operations for which await keyword is used to wait
-    let result=await productCollectionObject.insertOn(productObj)
+    let result=await productCollectionObject.insertOne(productObj)
     //send response
     response.send({message:"product is created successfully"})
    
