@@ -70,7 +70,7 @@ const Products = () => {
                                         <p className="card-text lead fw-bold">
                                             ${product.price}
                                         </p>
-                                        <NavLink to={'/products/${product.id}'} className="btn btn-outline-dark me-2 " style={{ textDecoration: 'none' }}>Buy now</NavLink>
+                                        <NavLink to={`/products/${product.id}`} className="btn btn-outline-dark me-2 " style={{ textDecoration: 'none' }}>Buy now</NavLink>
                                     </div>
                             </div>
                         </div>
