@@ -1,43 +1,66 @@
 import React from 'react';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { delItem } from '../redux/actions/index'
+import { NavLink, Link, Route, Routes } from 'react-router-dom'
+import Checkout from './Checkout';
 
-function Cart() {
-  const getTestData=async()=>{
-    //get token from localstorage
-    let token=localStorage.getItem("token");
-    //add token to header of request
-      let response=await axios.get('/userApi/test',{
-        headers:{ Authorization: "Bearer "+ token}
-      });
-      let message=response.data.message;
-     alert(message)
-  }
 
-  //get user
-  const getUsers=async()=>{
-    //get token from localstorage
-    let token=localStorage.getItem("token");
-    //add token to header of request
-      let response=await axios.get('/userApi/getusers',{
-        headers:{ Authorization: "Bearer "+ token}
-      });
-      let users=response.data.payload;
-     console.log(users)
-  }
+const Cart = () => {
+    const state = useSelector((state) => state.addItem)
+    const dispatch = useDispatch()
 
-  return (
-    <div>
-      {/* make request to pri=vate route 'test' */}
-      <button className="btn btn-warning d-block mx-auto mt-5" onClick={getTestData}>
-        Get Data from private route
-      </button>
+    const handleClose = (item) => {
+        dispatch(delItem(item))
+    }
 
-       {/* make request to pri=vate route 'test' */}
-       <button className="btn btn-danger d-block mx-auto mt-5" onClick={getUsers}>
-        Get users data
-      </button>
-    </div>
-  )
+    const cartItems = (cartItem) => {
+        return (
+            <div className="px-4 my-5 bg-light rounded-3" key={cartItem.id}>
+                <div className="container py-4">
+                    <button onClick={() => handleClose(cartItem)} className="btn-close float-end" aria-label="Close"></button>
+                    <div className="row justify-content-center">
+                        <div className="col-md-4">
+                            <img src={cartItem.img} alt={cartItem.title} height="200px" width="180px" />
+                        </div>
+                        <div className="col-md-4">
+                            <h3>{cartItem.title}</h3>
+                            <p className="lead fw-bold">${cartItem.price}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const emptyCart = () => {
+        return (
+            <div className="px-4 my-5 bg-light rounded-3 py-5">
+                <div className="container py-4">
+                    <div className="row">
+                        <h3>Your Cart is Empty</h3>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const button = () => {
+        return (
+            <div className="container">
+                <div className="row">
+                    <NavLink className="btn btn-outline-primary mb-5 w-25 mx-auto"  aria-current="page" to="checkout">Proceed to checkout</NavLink>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <>
+            {state.length === 0 && emptyCart()}
+            {state.length !== 0 && state.map(cartItems)}
+            {state.length !== 0 && button()}
+        </>
+    )
 }
 
-export default Cart
+export default Cart;

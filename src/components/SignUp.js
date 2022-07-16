@@ -3,25 +3,31 @@ import { useForm } from 'react-hook-form';
 import { Form, Button } from "react-bootstrap";
 import { MdLogin } from "react-icons/md";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,Link} from "react-router-dom";
+
 
 
 function SignUp() {
-    const { register, handleSubmit, formState: { errors }, } = useForm();
-    const navigate=useNavigate()
-    const onFormSubmit = (userObj) => {
-        axios.post("http://localhost:5000/user-api/create-user", userObj)
-            .then(response => {
-                console.log(response);
-                if(response.data.message==="New User created"){
-                    //navigate to login
-                    navigate("/login")
-                }
-            })
-            .catch(error => {
-                console.log(error)
-                alert("something is wrong in creating the user")
-            });
+    const {register,handleSubmit,formState: {errors}} = useForm();
+    const navigate=useNavigate();
+    //form submission
+    const onFormSubmit = (userObj) =>
+    {
+        //http post req
+        axios.post('http://localhost:5000/user-api/create-user',userObj)
+        .then(response=>{
+            alert(response.data.message);
+            //if user created
+            if(response.data.message==="New User created"){
+                //navigate to login
+                navigate("/login")
+            }
+            
+        })
+        .catch(error=>{
+            console.log(error)
+            alert("Something went wrong in creating user")
+        })
     }
     return (
         <div className='container bg-cyan w-80 h-80'>
@@ -32,7 +38,7 @@ function SignUp() {
                     <Form.Label >Username</Form.Label>
                     <Form.Control type="text" placeholder="Enter username"{...register("username", { minLength: 4, maxLength: 10, required: true })} />
                     {/* validation error message for username */}
-                    {errors.username?.type === 'required' && <p classname="text-danger">* Username is required</p>}
+                    {errors.username?.type === 'required' && <p className="text-danger">* Username is required</p>}
                     {errors.username?.type === 'minLength' && <p className="text-danger">* Min length should be 4</p>}
                     {errors.username?.type === 'maxLength' && <p className="text-danger">* Max length should be 10</p>}
                 </Form.Group>
@@ -41,7 +47,7 @@ function SignUp() {
                     <Form.Label >Password</Form.Label>
                     <Form.Control type="password" placeholder="Enter password"{...register("password", { required: true, minLength: 4, maxLength: 10 })} />
                     {/* validation error message for password */}
-                    {errors.password?.type === 'required' && <p classname="text-danger">*Password is required</p>}
+                    {errors.password?.type === 'required' && <p className="text-danger">*Password is required</p>}
                     {errors.password?.type === 'minLength' && <p className="text-danger">* Min length should be 4</p>}
                     {errors.password?.type === 'maxLength' && <p className="text-danger">* Max length should be 10</p>}
                 </Form.Group>
@@ -50,7 +56,7 @@ function SignUp() {
                     <Form.Label >Email</Form.Label>
                     <Form.Control type="mail" placeholder="Enter mail"{...register("mail", { required: true })} />
                     {/* validation error message for E-mail */}
-                    {errors.email && <p classname="text-danger">*E-mail is required</p>}
+                    {errors.email && <p className="text-danger">*E-mail is required</p>}
                 </Form.Group>
                 <p>Address</p>
                 {/* City */}
@@ -79,6 +85,8 @@ function SignUp() {
                 <Button variant="primary" type="submit">
                     Signup<MdLogin />
                 </Button>
+                    {/* Link to Login */}
+                <h1 className="h1-e"><Link to={{pathname : '/login'}}>Already have an account?</Link></h1>
             </Form>
         </div>
     );

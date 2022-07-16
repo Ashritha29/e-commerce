@@ -1,0 +1,29 @@
+.header{
+    font-size: xx-large;
+    font-weight: 900;
+    font-family: 'Monda', sans-serif;
+    color: white;
+}
+.wraper{
+    background-color: #FF69B4;
+    color: white;
+    font-size: large;
+    width: 80vh;
+    height:60vh;
+    margin: auto;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    margin-top: 2vh;
+}
+.buton2{
+    margin-left: 20vh;
+}
+.h1-a{
+    font-size: medium;
+    margin-top: 9px;
+    margin-left: 230px;
+}
+.h1-e{
+    font-size: medium;
+    margin-top: 9px;
+    margin-left: 150px;
+}

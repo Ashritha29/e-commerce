@@ -1,12 +1,19 @@
-import React,{useEffect,useState} from 'react';
-import {useParams} from 'react-router';
+import React,{ useEffect,useState } from 'react';
+import { useParams } from 'react-router';
 import Skeleton from "react-loading-skeleton";
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {addItem, delItem} from '../redux/actions/index';
 
 function Product() {
     const {id} =useParams();
     const [product,setProduct] = useState([]);
     const [loading,setLoading] = useState(false);
+
+    const dispatch=useDispatch();
+    const addProduct=(product)=>{
+        dispatch(addItem(product));
+    }
 
     useEffect(()=>{
         const getProduct =async ()=>{
@@ -58,7 +65,7 @@ function Product() {
                    $ {product.price}
                 </h3>
                 <p className='lead'>{product.description}</p>
-                <button className='btn btn-outline-dark'>
+                <button className='btn btn-outline-dark' onClick={()=>addProduct(product)}>
                     Add to Cart
                 </button>
                 <NavLink to="/cart" className="btn btn-dark ms-2 px-3">

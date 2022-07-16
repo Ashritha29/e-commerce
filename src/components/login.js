@@ -3,38 +3,80 @@ import { useForm } from 'react-hook-form';
 import { Form, Button } from "react-bootstrap";
 import { MdLogin } from "react-icons/md";
 import axios from "axios";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import './Login.css';
+import {useSelector, useDispatch} from "react-redux";
+import {userLogin} from "./slices/userSlice";
+
 
 function Login() {
-    const { register, handleSubmit, formState: { errors }, } = useForm();
-    const onFormSubmit = (userCredentialObj) => {
-        console.log(userCredentialObj)
-    }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    let { userObj, isError, isLoading, isSuccess, errMsg } = useSelector(
+        (state) => state.user
+      );
+
+      let dispatch = useDispatch();
+    let navigate = useNavigate();
+
+    const onFormSubmit = (userCredentialsObject) => {
+        dispatch(userLogin(userCredentialsObject));
+      };
+    
+      useEffect(() => {
+        if (isSuccess) {
+          navigate("/home");
+        }
+        
+      }, [isSuccess, isError]);
+
     return (
-        <div>
-            <div className='container bg-cyan w-80 h-80'>
-                <div className='display-2 text-center text-info '>Login</div>
-                <Form className="w-50 mx-auto" onSubmit={handleSubmit(onFormSubmit)} >
-                    {/* username */}
-                    <Form.Group className="mb-3" >
-                        <Form.Label >Username</Form.Label>
-                        <Form.Control type="text" placeholder="Enter username"{...register("username", { required: true })} />
-                        {/* validation error message for username */}
-                        {errors.username?.type === 'required' && <p classname="text-danger">* Username is required</p>}
-                    </Form.Group>
-                    {/* password */}
-                    <Form.Group className="mb-3">
-                        <Form.Label >Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password"{...register("password", { required: true })} />
-                        {/* validation error message for password */}
-                        {errors.password?.type === 'required' && <p classname="text-danger">*Password is required</p>}
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Login<MdLogin />
-                    </Button>
-                </Form>
+        <div className='container '>
+            
+            <div className="wraper p-5">
+
+                <div className='row'>
+                    <div className='col-12 col-sm-8 col-md-6 mx-auto'>
+                        <Form onSubmit={handleSubmit(onFormSubmit)}>
+                        <h1 className="text-center text-white">Login</h1>
+                            <Form.Group className='mt-3 mb-3'>
+                                <Form.Label >Username</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Username"
+                                    {...register("username", { required: true })}
+                                />
+                                {errors.username && (
+                                    <p className='text-danger' >*Username is required</p>
+                                )}
+                            </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type='password'
+                                    placeholder='Enter Password'
+                                    {...register("password", { required: true })}
+                                />
+                                {errors.password && (
+                                    <p className='text-danger'>*Password is required</p>
+                                )}
+                            </Form.Group>
+                            <Button variant='secondary' id="a" type="submit" className="buton2">
+                                Login <MdLogin />
+                            </Button>
+                        </Form>
+                    </div>
+                </div>
+                
+                <h1 className="h1-e">Not registered yet <Link to={{pathname : '/register'}}>sign up?</Link></h1>
             </div>
         </div>
-    )
+    );
 }
 
-export default Login
+export default Login;
